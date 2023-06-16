@@ -4,8 +4,11 @@
 **make sure to configure pusher credentials from pusher website**
 
 PUSHER_APP_ID=
+
 PUSHER_APP_KEY=
+
 PUSHER_APP_SECRET=
+
 PUSHER_APP_CLUSTER=
 
 ![social-media](https://user-images.githubusercontent.com/78965149/184528390-ea9d2a96-9d77-4b3a-9a65-54d58e9d40e1.png)
@@ -21,6 +24,14 @@ generate key `php artisan key:generate`
 migrate database `php artisan migrate`
 
 start server `php artisan serve`
+
+## Installation using docker
+
+`docker-compose build social-media`
+
+`docker-compose up -d`
+
+`docker-compose exec social-media php artisan key:generate`
 
 ## Contributing
 
