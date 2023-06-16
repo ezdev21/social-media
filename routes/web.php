@@ -18,9 +18,9 @@ Auth::routes();
 
 Route::get('/home',[HomeController::class, 'index'])->name('home');
 
-Route::get('/test',function(){
-  
-});
+Route::get('/auth/{provider}/redirect',[SocialiteController::class,'redirect']);
+Route::get('/auth/{provider}/callback',[SocialiteController::class,'callback']);
+
 
 Route::prefix('post')->group(function(){
   Route::get('create',[PostController::class,'create']);
