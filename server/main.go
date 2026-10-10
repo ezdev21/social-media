@@ -1,26 +1,29 @@
-
 package main
 
 import (
-	"net/http"
+    "log"
 
-	"github.com/gin-gonic/gin"
+    "server/config"
+    "server/database"
+    "server/routes"
+    "github.com/joho/godotenv"
 )
 
 func main() {
-	r := gin.Default()
+    godotenv.Load()
+    cfg, err := config.Load()
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello from Go + Gin!",
-		})
-	})
+    db, err := database.Connect(cfg.DatabaseURL)
+    if err != nil {
+        log.Fatal("Database connection failed: ", err)
+    }
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-		})
-	})
+    router := routes.Setup(db, cfg.JWTSecret)
 
-	r.Run(":8080")
+    if err := router.Run(":8080"); err != nil {
+        log.Fatal(err)
+    }
 }
